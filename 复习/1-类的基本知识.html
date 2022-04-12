@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script type="text/javascript">
+        class Person {
+            //构造器方法
+            constructor(name, age) {
+                // 构造器中的this是类的实例对象
+                this.name = name
+                this.age = age
+            }
+            // 方法
+            speak(){
+                // speak放在Person类的原型对象上，给实例调用
+                console.log(`我叫${this.name}， 我的年龄是${this.age}`)
+            }
+        }
+        class Student extends Person{ // 继承Person类
+            constructor(name, age, grade) {
+                super(name,age) //调用父类构造器，构造器必须调用super
+                this.grade = grade
+            }
+            speak() {
+                // super.speak();
+                console.log(`我叫${this.name}， 我的年龄是${this.age},我读的年纪是${this.grade}`) //重写父类方法
+            }
+            study(){
+                console.log("我很努力学习")
+            }
+        }
+
+        class Car {
+            constructor(name, price) {
+                this.name= name
+                this.price=price
+                // this.wheel=4
+            }
+            // 类中可以直接写语句,往实例上追加一个属性a=1
+            a = 1
+            // 给类增加一个属性
+            static demo = 100
+        }
+        c1 = new Car('宝马',100)
+
+        //创建一个Person类实例
+        const p1 = new Person('tom', 11)
+        console.log(p1)
+        p1.speak()
+
+        const p2 = new Person('jude',2)
+        console.log(p2)
+        p2.speak()
+
+
+        const s1 = new Student('aa',11,"大一")
+        console.log(s1)
+        s1.speak()
+        s1.study()
+    </script>
+
+
+
+
+</body>
+</html>

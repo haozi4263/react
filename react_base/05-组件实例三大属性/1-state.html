@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tmp</title>
+</head>
+<body>
+<!-- 准备好一个“容器” -->
+<div id="test"></div>
+
+<!-- 引入react核心库 -->
+<script type="text/javascript" src="../js/react.development.js"></script>
+<!-- 引入react-dom，用于支持react操作DOM -->
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<!-- 引入babel，用于将jsx转为js -->
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+<script type="text/babel" > /* 此处一定要写babel */
+//1.创建类式组件 包含代码资源组合叫组件
+class Weather extends React.Component{ //需要继承React的类
+    // 构造器调用几次：初始化执行一次
+    constructor(props) {
+        super(props);
+        this.state = {isHot:false} //初始化状态
+        //解解changeWeather指向问题
+        this.demo = this.changeWeather.bind(this)
+    }
+    // render调用几次：1+n次 初始化1次，n是状态修改次数，修改状态调用后重新渲染页面
+    render(){ // 必须要写render方法和返回值
+        // render是放在类MyComponent的原型对象上，给实例使用
+        // return <h2 id='title'>今天天气很{this.state.isHot ? '炎热':'凉爽'}</h2>
+        return <h2 onClick={this.demo}>今天天气很{this.state.isHot ? '炎热':'凉爽'}</h2>
+    }
+    // changeWeather调用几次，点击多次调用多少次
+    changeWeather(){
+        // 由于changeWeather是作为Onclick的回调，所以不是通过实例调用的，是直接调用
+        // 类中的方法默认开启了局部的严格模式，所以changeWeather的this是undefined
+        // 获取当前isHot的值, react的state里面的值不能直接更改
+        const isHot = this.state.isHot
+        // this.state.isHot = !isHot  只能更改，错误写法
+        //严重注意 状态state不可直接更改，必须通过this.setState去更改，且更新是一种合并，不是替换。
+        this.setState({isHot: !isHot})
+    }
+
+}
+//2.渲染类组件到页面
+    ReactDOM.render(<Weather/>,document.getElementById('test'))
+    /*
+        const title = document.getElementById('title')
+        title.addEventListener('click', ()=>{
+            console.log("标题被点击了")
+        })
+        const title = document.getElementById('title')
+        title.onclick= ()=>{
+            console.log("标题被点击了")
+        }
+     */
+    // react推荐使用方法
+
+</script>
+</body>
+</html>

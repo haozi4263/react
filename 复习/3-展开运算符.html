@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+// 展开运算符不能展开对象
+
+<script type="text/javascript">
+    let arr1 = [1,3,5,7,9]
+    let arr2 = [2,4,6,8,10]
+    console.log(...arr1) //展开数组分别输出
+
+    let arr3 = [...arr1,...arr2] //链接数组
+    console.log(arr3)
+
+    function sum(...arr){
+        return arr.reduce((preValue,currentValue)=>{
+            return preValue + currentValue
+        })
+    }
+    console.log(sum(1,3,4))
+
+    let person = {name:"jude",age:"11"}
+    let p2 = {...person} //复制对象， 对person进行拷贝
+    console.log('p2',p2)
+
+    person.age="22"
+    let p1 = person //引用person person修改，p1跟着修改
+    console.log('p1',p1)
+
+    let p3 = {...person,name:"bbb"} //复制对象时候修改属性
+    console.log('p3', p3)
+
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tmp</title>
+</head>
+<body>
+<!-- 准备好一个“容器” -->
+<div id="test1"></div>
+
+
+<!-- 引入react核心库 -->
+<script type="text/javascript" src="../js/react.development.js"></script>
+<!-- 引入react-dom，用于支持react操作DOM -->
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<!-- 引入babel，用于将jsx转为js -->
+<script type="text/javascript" src="../js/babel.min.js"></script>
+<script type="text/babel" > /* 此处一定要写babel */
+
+// 字符串形式的ref不推荐使用，存在效率问题
+
+//1.创建类式组件 包含代码资源组合叫组件
+class Demo extends React.Component{ //需要继承React的类
+    state = {isHot: true}
+
+    showData = ()=>{
+        alert(this.input1.value)
+    }
+    saveInput = (currentNode)=>{
+        this.input1 = currentNode
+        console.log("saveInput")
+    }
+
+    changeWeather = ()=>{
+        //获取原来的数据
+        const {isHot} = this.state
+        //更新状态
+        this.setState({isHot:!isHot})
+    }
+
+    render(){
+        const {isHot} = this.state
+        return(
+            <div>
+                <h2>今天天气很{isHot ? '炎热':'凉爽'}</h2>
+                {/*<input ref={currentNode => this.input1 = currentNode} type="text" />&nbsp;<br/><br/> jsx注释*/ }
+                <input ref={this.saveInput} type="text"/>
+                <button ref="button1" onClick={this.showData}>点我提示数据</button>&nbsp;
+                <button onClick={this.changeWeather}>点我切换天气</button>&nbsp;
+            </div>
+        )
+    }
+
+    /*
+        1.回调函数：使用内联函数更新状态时候回调函数会执行2次，第一次传入参数为null,第二次才是真实DOM元素
+    */
+}
+//2.渲染类组件到页面
+ReactDOM.render(<Demo/>,document.getElementById('test1')) // number需要通过{num}
+
+
+</script>
+</body>
+</html>

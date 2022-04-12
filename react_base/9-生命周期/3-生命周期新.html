@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tmp</title>
+</head>
+<body>
+<!-- 准备好一个“容器” -->
+    <div id="test"></div>
+    <div id="test1"></div>
+
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/17.1/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/17.1/react-dom.development.js"></script>
+    <!-- 引入babel，用于将jsx转为js -->
+    <script type="text/javascript" src="../js/17.1/babel.min.js"></script>
+
+    <script type="text/babel" > /* 此处一定要写babel */
+    //1.创建组件
+    class Count extends React.Component{
+        constructor(props){
+            console.log('钩子1 Count--constructor')
+            super(props)
+            //初始化状态
+            this.state = {count:0}
+        }
+
+
+        //加1按钮回调
+        add = ()=>{
+            //获取原状态
+            const {count} = this.state
+            //更新状态
+            this.setState({count:count+1})
+        }
+
+        //强制更新的回调,不受shouldComponentUpdate钩子控制
+        force = ()=>{
+            console.log('Count--forceComponentUpdate')
+            this.forceUpdate()
+        }
+
+        static getDerivedStateFromProps(props,state){
+            console.log("钩子2 getDerivedStateFromProps",props,state)
+            return null //必须返回状态对象或null，介于构造器和render之间
+            // return props //从props得到一个状态，派生到状态。用法比较罕见基本不用,即state的值取决于props
+        }
+        //在更新之前获取快照，此钩子使用极少
+        // 在最近一次渲染输出（提交到DOM节点）之前调用，它使得组件能在发生更改之前从DOM中捕获一些信息（如，滚动位置）。次生命周期的任何返回值将做为参数传递给componentDidUpdate()
+        getSnapshotBeforeUpdate(prevProps,prevState ){
+            console.log('getSnapshotBeforeUpdate')
+            // return null // 必须返回一个null或快照值，任何值都可以为快照值
+            return "snapshotValue"
+        }
+        //卸载组件回调
+        unmountComponent = ()=>{
+            console.log('钩子5 Count--unmountComponent')
+            ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+        }
+
+
+        //控制组件是否更新的开关，默认这个钩子默认返回true
+        shouldComponentUpdate(){ // 必须返回一个布尔
+            console.log('Count--shouldComponentUpdate')
+            return true // 返回false后续钩子都不会执行
+        }
+        //组件将要更新的钩子
+
+
+        //组件更新完毕的钩子
+        componentDidUpdate(preProps,preState,snapshotValue){
+            console.log('  Count--componentDidUpdate',preProps,preState,snapshotValue)
+        }
+
+        //组件挂载完毕的钩子
+        componentDidMount(){
+            console.log('钩子4 Count--componentDidMount')
+        }
+
+        render (){
+            console.log('钩子3 Count--render')
+            const {count} = this.state
+            return (
+                <div>
+                    <h2>当前求和:{count}</h2>
+                    <button onClick={this.add}>点我+1</button>
+                    <button onClick={this.unmountComponent}>卸载组件</button>
+                </div>
+            )
+        }
+    }
+
+
+    //2.挂载组件
+    ReactDOM.render(<Count count="200"/>,document.getElementById('test'))
+
+    // 生命周期回调函数 生命周期钩子函数
+</script>
+
+/*
+    1. 初始化阶段: 由ReactDOM.render()触发---初次渲染
+        1.constructor()
+        2.getDerivedStateFromProps
+        3.render()
+        4.componentDidMount()
+    2. 更新阶段: 由组件内部this.setSate()或父组件重新render触发
+        1.getDerivedStateFromProps
+        2.shouldComponentUpdate()
+        3.render()
+        4.getSnapshotBeforeUpdate
+        5.componentDidUpdate()
+    3. 卸载组件: 由ReactDOM.unmountComponentAtNode()触发
+        componentWillUnmount()
+
+    重要的勾子
+    1.render：初始化渲染或更新渲染调用
+    2.componentDidMount：开启监听, 发送ajax请求
+    3.componentWillUnmount：做一些收尾工作, 如: 清理定时器
+    即将废弃的勾子
+        1.componentWillMount
+        2.componentWillReceiveProps
+        3.componentWillUpdate
+        现在使用会出现警告，下一个大版本需要加上UNSAFE_前缀才能使用，以后可能会被彻底废弃，不建议使用。
+*/
+
+</body>
+</html>

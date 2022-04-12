@@ -1,0 +1,16 @@
+
+axios:
+    1.基于promise的异步ajax请求库
+    2.浏览器/node端服务器都可以使用
+    3.支持请求/响应拦截器
+    4.支持请求取消
+    5.请求/响应数据转换
+    6.批量发送多个请求
+
+
+安装json-server:
+    npm install -g json-server
+    json-server --watch db.json
+
+安装axios:
+    yarn add axios

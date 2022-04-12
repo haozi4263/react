@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>form</title>
+</head>
+<body>
+    <!-- 准备好一个“容器” -->
+    <div id="test"></div>
+
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel，用于将jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+
+    <script type="text/babel" > /* 此处一定要写babel */
+//1.创建虚拟DOM
+    //创建组件
+    class Login extends React.Component{
+        Call = (event)=>{
+            event.preventDefault() // 阻止表单提交,使用ajax提交
+            const {username,password} = this
+            alert(`你输入的用户名${username.value}, 你输入的密码是:${password.value}`)
+        }
+        render(){
+            return (
+                <form onSubmit={this.Call}>
+                    用户名: <input ref={currentNode => this.username = currentNode}type="text" name="username"/>
+                    密码:  <input ref={currentNode => this.password = currentNode}type="password" name="password" />
+                    <button>登录</button>
+                </form>
+            )
+        }
+    }
+    //2.渲染虚拟DOM到页面
+    ReactDOM.render(<Login/>,document.getElementById('test'))
+
+    /*
+        定义：页面中所有输入类的dom，你是现用现取就是非受控组件
+    */
+</script>
+</body>
+</html>

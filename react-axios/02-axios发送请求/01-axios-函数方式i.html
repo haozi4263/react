@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <button onclick="Get()">Get请求</button>
+        <button onclick="Post()">Post请求</button>
+        <button onclick="Put()">Put请求</button>
+        <button onclick="Dels()">Delete请求</button>
+    </div>
+
+    <script src="https://cdn.bootcss.com/axios/0.19.0/axios.js"></script>
+
+    <script>
+        // 指定默认配置
+        axios.defaults.baseURL='http://localhost:3000'
+
+        //添加请求拦截器,可以添加多个，先进后出
+        axios.interceptors.request.use(
+            // 成功回调函数
+            config =>{
+                console.log('request successfully interceptor')
+                return config
+            },
+            // 失败回调函数
+            error =>{
+                console.log('request error interceptor')
+                return Promise.reject(error)
+            }
+        )
+        //添加响应拦截器，可以添加多个，先进先出。数据响应之前调用
+        axios.interceptors.response.use(
+            // 成功回调函数
+            config =>{
+                console.log('response successfully interceptor')
+                return config
+            },
+            // 失败回调函数
+            error =>{
+                console.log('response error interceptor')
+                return Promise.reject(error)
+            }
+        )
+
+        function Get(){
+            axios({
+                url:"/posts",
+                params:{
+                    id:1
+                },
+            })
+            .then(resoponse =>{
+                console.log('success get /posts',resoponse.data)
+            })
+        }
+
+    </script>
+</body>
+</html>

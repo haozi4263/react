@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tmp</title>
+</head>
+<body>
+<!-- 准备好一个“容器” -->
+<div id="test1"></div>
+
+
+<!-- 引入react核心库 -->
+<script type="text/javascript" src="../js/react.development.js"></script>
+<!-- 引入react-dom，用于支持react操作DOM -->
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<!-- 引入babel，用于将jsx转为js -->
+<script type="text/javascript" src="../js/babel.min.js"></script>
+<script type="text/babel" > /* 此处一定要写babel */
+
+// 字符串形式的ref不推荐使用，存在效率问题
+
+//1.创建类式组件 包含代码资源组合叫组件
+class Demo extends React.Component{ //需要继承React的类
+    //展示左侧输入框的数据
+    showData = ()=>{
+        // debugger
+        alert(this.refs.input1.value)
+    }
+    //展示右侧输入框的数据
+    DisData = ()=>{
+        // debugger
+        alert(this.refs.input2.value)
+    }
+    render(){
+        return(
+            <div>
+                <input ref="input1" type="text" placeholder="点击按钮提示数据"/>&nbsp;
+                <button ref="button1" onClick={this.showData}>点我提示左侧数据</button>&nbsp;
+                <input ref="input2" onBlur={this.DisData} type="text" placeholder="失去焦点提示数据"/>
+            </div>
+        )
+    }
+
+}
+//2.渲染类组件到页面
+ReactDOM.render(<Demo/>,document.getElementById('test1')) // number需要通过{num}
+
+
+</script>
+</body>
+</html>
