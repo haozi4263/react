@@ -20,8 +20,8 @@ class Message extends Component {
                                return (
                                    <li key={msgObj.id}>
                                        {/*<a href="/xxxx">{msgObj.title}</a>&nbsp;&nbsp;*/}
-                                       {/* 向路由组件传递params参数  */}
-                                       <Link to={`/home/message/detail/${msgObj.id}/${msgObj.title}`}>{msgObj.title}</Link>
+                                       {/* 路由组件开启replace模式 不会留下路由痕迹。默认push模式*/}
+                                       <Link replace={true} to={{pathname:'/home/message/detail',state:{id:msgObj.id,title:msgObj.title}}}>{msgObj.title}</Link>
                                    </li>
                                )
                         })
@@ -30,8 +30,8 @@ class Message extends Component {
                 <hr/>
                 {/*<Detail/>*/}
                 {/*  注册路由  */}
-                {/* 声明接受params参数 */}
-                <Route path="/home/message/detail/:id/:title" component={Detail}/>
+                {/* 声明接收state参数,无需声明接收 正常注册路由即可*/}
+                <Route path="/home/message/detail/" component={Detail}/>
             </div>
         );
     }

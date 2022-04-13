@@ -4,11 +4,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 //引入App外壳组件 .js .jsx可以不写 .css必须写
 import App from './App'
-
+import {BrowserRouter} from "react-router-dom";
 
 
 // 渲染App到页面
 ReactDOM.render(
-    <App/>,
+    <BrowserRouter>
+        <App/>
+    </BrowserRouter>,
     document.getElementById('root')
 )

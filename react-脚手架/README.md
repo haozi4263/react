@@ -46,7 +46,24 @@ rfc: 函数创建组件
             2.路由的匹配是按照注册路由的顺序进行的
         
         向路由组件传递参数：
-            1.params参数
+            1.params参数（用的最多）
                 路由链接(携带参数)：<Link to='/demo/test/tom/18'>详情</Link>
                 注册路由(声明接受)：<Route path='/demo/test/:name' Component={Demo}>
                 接受参数： const {id}=this.props.match.params
+            2.search参数（用的比较多）
+                路由链接(携带参数)：<Link to={`/home/message/detail/?id=${msgObj.id}&title=${msgObj.title}`}>{msgObj.title}</Link>
+                注册路由：无需声明正常注册即可
+                接受参数：this.props.location.search
+                备注：获取到的search是urlencoded编码字符串，需要通过querystring解析
+            3.state参数（不同组件里面state，是路由组件独有的）
+                优势： url地址拦中没有参数,刷新也可以保留住参数
+                路由链接(携带参数)：<Link to={{pathname:'/home/message/detail',state:{id:msgObj.id,title:msgObj.title}}}>{msgObj.title}</Link>
+                注册路由：无需声明正常注册即可
+                接受参数：this.props.location.state
+
+                总结：
+                    params: localhost:3000/home/message/detail/01/消息1
+                    search: localhost:3000/home/message/detail?id=1&titile=消息1
+                    state: localhost:3000/home/message/detail?id=1&titile=消息1
+            4.编程式路由导航
+                
